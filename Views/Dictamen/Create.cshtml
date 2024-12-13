@@ -1,0 +1,57 @@
+﻿@model ExpediFlow.Models.Dictaman
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card card-primary">
+        <div class="card-header" style="background-color: var(--blue);">
+            <h3 class="card-title">Crear Dictamen</h3>
+        </div>
+         <form asp-action="Create">
+        <div class="card-body">
+            <div class="callout callout-info" style="border-left-color: var(--blue);">
+                <h5>Información General</h5>
+                <br/>
+                <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="IdExpediente" class="control-label"></label>
+                                <select asp-for="IdExpediente" class="form-control select2bs4" asp-items="ViewBag.IdExpediente">
+                                <option value="">Seleccionar...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NumeroDictamen" class="control-label"></label>
+                                <input asp-for="NumeroDictamen" class="form-control" />
+                                <span asp-validation-for="NumeroDictamen" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FechaDictamen" class="control-label"></label>
+                                <input asp-for="FechaDictamen" class="form-control" type="date" />
+                                <span asp-validation-for="FechaDictamen" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Justificacion" class="control-label"></label>
+                                <input asp-for="Justificacion" class="form-control" />
+                                <span asp-validation-for="Justificacion" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdUsuarioDictamen" class="control-label"></label>
+                                <input asp-for="IdUsuarioDictamen" class="form-control" />
+                                <span asp-validation-for="IdUsuarioDictamen" class="text-danger"></span>
+                            </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Crear" class="btn btn-primary" style="background-color: var(--blue);" />
+            <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+         </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

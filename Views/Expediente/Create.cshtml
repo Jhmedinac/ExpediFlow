@@ -1,0 +1,99 @@
+﻿@model ExpediFlow.Models.Expediente
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card card-primary">
+        <div class="card-header" style="background-color: var(--blue);">
+            <h3 class="card-title">Crear Expediente</h3>
+        </div>
+         <form asp-action="Create">
+        <div class="card-body">
+            <div class="callout callout-info" style="border-left-color: var(--blue);">
+                <h5>Información General</h5>
+                <br/>
+                <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="NumExpediente" class="control-label"></label>
+                                <input asp-for="NumExpediente" class="form-control" />
+                                <span asp-validation-for="NumExpediente" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdTramite" class="control-label"></label>
+                                <select asp-for="IdTramite" class ="form-control" asp-items="ViewBag.IdTramite"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdSubTramite" class="control-label"></label>
+                                <select asp-for="IdSubTramite" class ="form-control" asp-items="ViewBag.IdSubTramite"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdEntidadSolicitante" class="control-label"></label>
+                                <select asp-for="IdEntidadSolicitante" class ="form-control" asp-items="ViewBag.IdEntidadSolicitante"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdEntidadResponsable" class="control-label"></label>
+                                <select asp-for="IdEntidadResponsable" class ="form-control" asp-items="ViewBag.IdEntidadResponsable"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdEntidadRepresentante" class="control-label"></label>
+                                <select asp-for="IdEntidadRepresentante" class ="form-control" asp-items="ViewBag.IdEntidadRepresentante"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdDepartamento" class="control-label"></label>
+                                <select asp-for="IdDepartamento" class ="form-control" asp-items="ViewBag.IdDepartamento"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdMunicipio" class="control-label"></label>
+                                <select asp-for="IdMunicipio" class ="form-control" asp-items="ViewBag.IdMunicipio"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdEstadoActual" class="control-label"></label>
+                                <select asp-for="IdEstadoActual" class ="form-control" asp-items="ViewBag.IdEstadoActual"></select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FechaEstadoActual" class="control-label"></label>
+                                <input asp-for="FechaEstadoActual" class="form-control" type="date" />
+                                <span asp-validation-for="FechaEstadoActual" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdUsuarioAsignado" class="control-label"></label>
+                                <input asp-for="IdUsuarioAsignado" class="form-control" />
+                                <span asp-validation-for="IdUsuarioAsignado" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdResolucion" class="control-label"></label>
+                                <input asp-for="IdResolucion" class="form-control" />
+                                <span asp-validation-for="IdResolucion" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdDictamen" class="control-label"></label>
+                                <input asp-for="IdDictamen" class="form-control" />
+                                <span asp-validation-for="IdDictamen" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdArchivo" class="control-label"></label>
+                                <input asp-for="IdArchivo" class="form-control" />
+                                <span asp-validation-for="IdArchivo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Observaciones" class="control-label"></label>
+                                <input asp-for="Observaciones" class="form-control" />
+                                <span asp-validation-for="Observaciones" class="text-danger"></span>
+                            </div>
+                          
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Crear" class="btn btn-primary" style="background-color: var(--blue);" />
+            <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+         </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

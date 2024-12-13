@@ -1,0 +1,33 @@
+﻿@{
+    @model ExpediFlow.Models.FlujoBloque
+
+}
+
+<div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTitle">Crear Bloque</h5>
+            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <form id="createBlockForm">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre del Bloque</label>
+                        <input type="text" class="form-control" name="NombreBloque" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Unidad</label>
+                        <select class="form-control select2bs4" name="IdUnidad" asp-for="IdUnidad" asp-items="ViewBag.Unidades" required></select>
+                    </div>
+
+                    <input type="hidden" name="IdFlujo" value="@Model.IdFlujo">
+                    <input type="hidden" name="Orden" value="@Model.Orden">
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="saveBlockChanges()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+

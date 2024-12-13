@@ -1,0 +1,335 @@
+﻿@model PermissionViewModel
+@using ExpediFlow.Models
+
+@{
+      
+    Pager pager = new Pager();
+    string roleId = ViewBag.RoleId as string;
+    int PageNo = 0;
+    if (ViewBag.Pager != null)
+    {
+        pager = ViewBag.Pager;
+        PageNo = pager.CurrentPage;
+    }
+}
+
+<div class="container-fluid">
+    <div>
+        <label for="cmbRoles">Seleccione un rol:</label>
+        <select id="cmbRoles" name="cmbRoles" class="form-control">
+            @foreach (var role in Model.Roles)
+            {
+                <option value="@role.RoleId" selected="@(role.RoleId == Model.RoleId ? "selected" : null)">@role.RoleName</option>
+            }
+        </select>
+    </div>
+    <br>
+    <div class="row">      
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card card-primary">
+                            <div class="card-header" style="background-color: var(--blue);">
+                                <h3 class="card-title">Accesos</h3>
+                                <div class="card-tools">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cloneRoleModal">
+                                        Clonar Rol Actual
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form asp-controller="Permission" asp-action="AssignInitialVentanas" method="post" id="roleForm">
+                                            <input type="hidden" name="roleId" value="@Model.RoleId" />
+                                            <div class="form-group">
+                                                <label for="cmbVentanas">Seleccione una o varias ventanas:</label>
+                                                <select id="cmbVentanas" name="ventanaIds" class="duallistbox" multiple="multiple" data-placeholder="Seleccione una ventana" data-dropdown-css-class="select2-blue" style="width: 100%;">
+                                                    @foreach (var ventana in Model.Ventanas)
+                                                    {
+                                                        bool isSelected = Model.VentanasAsignadas.Any(rv => rv.VentanaId == ventana.Id);
+                                                        <option value="@ventana.Id" selected="@isSelected">@ventana.Nombre</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary">Guardar Asignación Inicial</button>
+                                        </form>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.card-body -->
+                                           
+                        </div>
+
+                    <div class="modal fade" id="cloneRoleModal" tabindex="-1" role="dialog" aria-labelledby="cloneRoleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="cloneRoleModalLabel">Clonar Rol</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="newRoleName">Nombre del nuevo rol</label>
+                                        <input type="text" class="form-control" id="newRoleName" placeholder="Ingrese el nombre del nuevo rol">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" onclick="cloneRole()">Crear y Clonar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                <section class="col-lg-12 connectedSortable">
+                    <div class="card card-primary">
+                        <div class="card-header" style="background-color: var(--blue);">
+                            <h3 class="card-title">Accesos</h3>
+                            <div class="card-tools">                         
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="form-vertical">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <h4>Ventanas Asignadas</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                                   
+
+                            <table id="table" cellspacing="0" class="table table-striped projects" data-toggle="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>
+                                            Ver<br />
+                                            <input type="checkbox" id="checkAllVer" onclick="toggleAll('ver', this)" />
+                                        </th>
+                                        <th>
+                                            Crear<br />
+                                            <input type="checkbox" id="checkAllCrear" onclick="toggleAll('crear', this)" />
+                                        </th>
+                                        <th>
+                                            Editar<br />
+                                            <input type="checkbox" id="checkAllEditar" onclick="toggleAll('editar', this)" />
+                                        </th>
+                                        <th>
+                                            Eliminar<br />
+                                            <input type="checkbox" id="checkAllEliminar" onclick="toggleAll('eliminar', this)" />
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="selectedVentanasTableBody">
+                                    @foreach (var roleVentana in Model.VentanasAsignadas)
+                                    {
+                                        var ventana = Model.Ventanas.FirstOrDefault(v => v.Id == roleVentana.VentanaId);
+                                        if (ventana != null)
+                                        {
+                                            <tr data-ventana-id="@ventana.Id">
+                                                <td>@ventana.Nombre</td>
+                                                <td><input type="checkbox" name="ver_@ventana.Id" @(roleVentana.Ver ? "checked" : "") onclick="updatePermission('@Model.RoleId', @ventana.Id, 'ver', this.checked, '@ventana.Nombre')" class="ver-checkbox" /></td>
+                                                <td><input type="checkbox" name="crear_@ventana.Id" @(roleVentana.Crear ? "checked" : "") onclick="updatePermission('@Model.RoleId', @ventana.Id, 'crear', this.checked, '@ventana.Nombre')" class="crear-checkbox" /></td>
+                                                <td><input type="checkbox" name="editar_@ventana.Id" @(roleVentana.Editar ? "checked" : "") onclick="updatePermission('@Model.RoleId', @ventana.Id, 'editar', this.checked, '@ventana.Nombre')" class="editar-checkbox" /></td>
+                                                <td><input type="checkbox" name="eliminar_@ventana.Id" @(roleVentana.Eliminar ? "checked" : "") onclick="updatePermission('@Model.RoleId', @ventana.Id, 'eliminar', this.checked, '@ventana.Nombre')" class="eliminar-checkbox" /></td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination justify-content-center">
+                                    @if (pager.TotalPages > 1)
+                                    {
+                                        <li class="page-item @(pager.CurrentPage == 1 ? "disabled" : "")">
+                                            <a class="page-link" href="@Url.Action("Index", new { pg = 1, roleId = roleId })">Primero</a>
+                                        </li>
+                                        <li class="page-item @(pager.CurrentPage == 1 ? "disabled" : "")">
+                                            <a class="page-link" href="@Url.Action("Index", new { pg = pager.CurrentPage - 1, roleId = roleId })">Anterior</a>
+                                        </li>
+                                        @for (int i = pager.StartPage; i <= pager.EndPage; i++)
+                                        {
+                                            <li class="page-item @(pager.CurrentPage == i ? "active" : "")">
+                                                <a class="page-link" href="@Url.Action("Index", new { pg = i, roleId = roleId })">@i</a>
+                                            </li>
+                                        }
+                                        <li class="page-item @(pager.CurrentPage == pager.TotalPages ? "disabled" : "")">
+                                            <a class="page-link" href="@Url.Action("Index", new { pg = pager.CurrentPage + 1, roleId = roleId })">Siguiente</a>
+                                        </li>
+                                        <li class="page-item @(pager.CurrentPage == pager.TotalPages ? "disabled" : "")">
+                                            <a class="page-link" href="@Url.Action("Index", new { pg = pager.TotalPages, roleId = roleId })">Último</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+                </div>
+                <br />
+            </div>
+        
+    </div>
+
+
+</div>
+
+
+@section Scripts {
+    <script>
+
+
+        function cloneRole() {
+            const originalRoleId = document.getElementById('cmbRoles').value;
+            const newRoleName = document.getElementById('newRoleName').value;
+
+            if (!newRoleName) {
+                toastr.error('Por favor, ingrese un nombre para el nuevo rol.');
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.Action("CloneRole", "Permission")', // Ajusta el nombre del controlador según tu configuración
+                type: 'POST',
+                data: {
+                    originalRoleId: originalRoleId,
+                    newRoleName: newRoleName
+                },
+                success: function () {
+                    toastr.success('Rol clonado exitosamente.');
+                    $('#cloneRoleModal').modal('hide');
+                    location.reload(); // Refresca la página
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('Error al clonar el rol:', error);
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            checkAllStates();
+            const cmbRoles = document.getElementById('cmbRoles');
+
+            cmbRoles.addEventListener('change', function () {
+                var selectedRoleId = cmbRoles.value;
+                if (selectedRoleId) {
+                    window.location.href = '@Url.Action("GetPermissions", "Permission")' + '?selectedRoleId=' + selectedRoleId;
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('#cmbVentanas').bootstrapDualListbox({
+                // Configuración adicional si es necesaria
+            });
+
+            $('#roleForm').submit(function (event) {
+                event.preventDefault(); 
+
+                $.ajax({
+                    url: '@Url.Action("AssignInitialVentanas", "Permission")',
+                    type: 'POST',
+                    data: $(this).serialize(), 
+                    success: function (data) {
+                        toastr.success('Asignación inicial de ventanas guardada exitosamente.');
+                        window.location.reload(); 
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error al guardar la asignación inicial de ventanas:', error);
+                    }
+                });
+            });
+        });
+
+       
+
+        let bulkUpdate = false;
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            checkAllStates();       
+        });
+
+        function toggleAll(permission, checkbox) {
+            bulkUpdate = true; // Indicate that a bulk update is in progress
+            const checkboxes = document.querySelectorAll(`.${permission}-checkbox`);
+            checkboxes.forEach(cb => cb.checked = checkbox.checked);
+            checkboxes.forEach(cb => {
+                const ventanaId = cb.closest('tr').getAttribute('data-ventana-id');
+                updatePermission('@Model.RoleId', ventanaId, permission, checkbox.checked, '');
+            });
+            setTimeout(() => { bulkUpdate = false; }, 100); // Reset the flag after a delay
+            toastr.success(`Permisos ${permission} actualizados correctamente para todas las ventanas.`);
+        }
+
+        function updatePermission(roleId, ventanaId, permissionType, isChecked, ventanaNombre) {
+            $.ajax({
+                url: '@Url.Action("UpdateVentanas", "Permission")',
+                type: 'POST',
+                data: {
+                    roleId: roleId,
+                    ventanaId: ventanaId,
+                    permissionType: permissionType,
+                    isSelected: isChecked
+                },
+                success: function () {
+                    if (!bulkUpdate) {
+                        if (isChecked) {
+                            if (ventanaNombre) {
+                            toastr.success(`Permiso ${permissionType} de la ventana "${ventanaNombre}" otorgado correctamente.`);
+                            }
+                        } else {
+                            if (ventanaNombre) {
+                            toastr.warning(`Permiso ${permissionType} de la ventana "${ventanaNombre}" removido correctamente.`);
+                            }
+                        }
+                    }
+                    checkAllStates();
+                },
+                error: function (xhr, status, error) {
+                    toastr.error('Error al actualizar el permiso:', error);
+                }
+            });
+        }
+
+
+        function checkAllStates() {
+            const permissionTypes = ['ver', 'crear', 'editar', 'eliminar'];
+            permissionTypes.forEach(permission => {
+                const allChecked = [...document.querySelectorAll(`.${permission}-checkbox`)].every(cb => cb.checked);
+                document.getElementById(`checkAll${capitalize(permission)}`).checked = allChecked;
+            });
+        }
+
+        function capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    </script>
+
+}
+

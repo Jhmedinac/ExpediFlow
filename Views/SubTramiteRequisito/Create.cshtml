@@ -1,0 +1,44 @@
+﻿@model ExpediFlow.Models.SubTramiteRequisito
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card card-primary">
+        <div class="card-header" style="background-color: var(--blue);">
+            <h3 class="card-title">Crear SubTramiteRequisito</h3>
+        </div>
+         <form asp-action="Create">
+        <div class="card-body">
+            <div class="callout callout-info" style="border-left-color: var(--blue);">
+                <h5>Información General</h5>
+                <br/>
+                <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="IdSubtramite" class="control-label"></label>
+                            <select asp-for="IdSubtramite" class="form-control select2bs4" asp-items="ViewBag.IdSubtramite">
+                                <option value="">Seleccionar...</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdRequisito" class="control-label"></label>
+                            <select asp-for="IdRequisito" class="form-control select2bs4" asp-items="ViewBag.IdRequisito">
+                                <option value="">Seleccionar...</option>
+                                </select>
+                            </div>
+                           
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Crear" class="btn btn-primary" style="background-color: var(--blue);" />
+            <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+         </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

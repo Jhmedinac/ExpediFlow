@@ -1,0 +1,84 @@
+﻿@using ExpediFlow.Models
+@using Newtonsoft.Json
+@model InicioFiltros
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<style>
+    .icon-custom-color {
+        color: #D9D9D9;
+        transition: color 0.3s;
+        display: block;
+    }
+
+    .icon-container:hover .icon-custom-color {
+        color: #1797C0;
+    }
+
+    .users-list-name {
+        display: block;
+        text-align: center;
+        margin-top: 8px;
+        color: #D9D9D9;
+        transition: color 0.3s;
+        font-weight: bold;
+    }
+
+    .icon-container:hover .users-list-name {
+        color: #1797C0;
+    }
+
+    .icon-container {
+        text-align: center;
+        list-style: none;
+        padding: 0;
+        margin: 20px;
+    }
+
+    .icon-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .icon-list {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 0;
+    }
+
+    .card-custom {
+        border-top: 3px solid #1797C0; 
+    }
+</style>
+<script src="~/plugins/chart.js/chart.bundle.min.js"></script>
+<script src="~/plugins/chart.js/chart.bundle.js"></script>
+<script src="~/plugins/chart.js/chart.min.js"></script>
+<script src="~/plugins/chart.js/chart.js"></script>
+
+<div class="container-flui">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Home Page</h1>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+
+
+}
+
+
+

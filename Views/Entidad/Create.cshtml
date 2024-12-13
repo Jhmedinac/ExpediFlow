@@ -1,0 +1,90 @@
+﻿@model ExpediFlow.Models.Entidad
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid">
+    <div class="card card-primary">
+        <div class="card-header" style="background-color: var(--blue);">
+            <h3 class="card-title">Crear Entidad</h3>
+        </div>
+         <form asp-action="Create">
+        <div class="card-body">
+            <div class="callout callout-info" style="border-left-color: var(--blue);">
+                <h5>Información General</h5>
+                <br/>
+                <div class="row">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="IdTipoEntidad" class="control-label"></label>
+                            <select asp-for="IdTipoEntidad" class="form-control select2bs4" asp-items="ViewBag.IdTipoEntidad">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                        </div>
+                            <div class="form-group">
+                                <label asp-for="Dni" class="control-label"></label>
+                                <input asp-for="Dni" class="form-control" />
+                                <span asp-validation-for="Dni" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Rtn" class="control-label"></label>
+                                <input asp-for="Rtn" class="form-control" />
+                                <span asp-validation-for="Rtn" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Codigo" class="control-label"></label>
+                                <input asp-for="Codigo" class="form-control" />
+                                <span asp-validation-for="Codigo" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Nombre" class="control-label"></label>
+                                <input asp-for="Nombre" class="form-control" />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Direccion" class="control-label"></label>
+                                <input asp-for="Direccion" class="form-control" />
+                                <span asp-validation-for="Direccion" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Telefono" class="control-label"></label>
+                                <input asp-for="Telefono" class="form-control" />
+                                <span asp-validation-for="Telefono" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="control-label"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdDepartamento" class="control-label"></label>
+                            <select asp-for="IdDepartamento" class="form-control select2bs4" asp-items="ViewBag.IdDepartamento">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="IdMunicipio" class="control-label"></label>
+                            <select asp-for="IdMunicipio" class="form-control select2bs4" asp-items="ViewBag.IdMunicipio">
+                                <option value="">Seleccionar...</option>
+                            </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Observaciones" class="control-label"></label>
+                                <input asp-for="Observaciones" class="form-control" />
+                                <span asp-validation-for="Observaciones" class="text-danger"></span>
+                            </div>
+                           
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Crear" class="btn btn-primary" style="background-color: var(--blue);" />
+            <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+         </div>
+        </form>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

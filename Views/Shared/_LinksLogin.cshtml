@@ -1,0 +1,48 @@
+﻿﻿@using Microsoft.AspNetCore.Identity
+@using ExpediFlow.Models;
+
+@inject SignInManager<Usuario> SignInManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+           @*  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#userOptions" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button> *@
+            <div class="collapse navbar-collapse" id="userOptions">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle align-content-end" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"  style="right: 1px;">
+                            <img id="iFotoPerfil" src="" class="user-image img-circle elevation-2" alt="User Image">
+                            @User.Identity.Name
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" asp-controller="Usuario" asp-action="PersonalData" id="lprofilePass">Editar Perfil</a>
+                            <a class="dropdown-item" asp-controller="Usuario" asp-action="Email" id="lprofilePass">Cambiar Email</a>
+                            <a class="dropdown-item" asp-controller="Usuario" asp-action="ChangePassword" id="lprofilePass">Cambiar Contraseña</a>
+                            <form class="form-inline" asp-action="logout" asp-controller="usuario">
+                                <button type="submit" class="dropdown-item">
+                                    Logout
+                                </button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link dark-text" asp-controller="usuario" asp-action="Registro">
+                Registro
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link dark-text" asp-controller="usuario" asp-action="Login">
+                Login
+            </a>
+        </li>
+    }
+</ul>

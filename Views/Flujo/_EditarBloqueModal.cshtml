@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    @model ExpediFlow.Models.FlujoBloque
+}
+<!-- Modal -->
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Modificar Bloque</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editBlockForm">
+                    <div class="modal-body">
+                        <input type="hidden" id="IdBloque" name="IdBloque" value="@Model.IdBloque">
+                        <input type="hidden" id="iIdEstadoInicial" name="IdEstadoInicial" value="@Model.IdEstadoInicial">
+                        <input type="hidden" id="iIdEstadoFinal" name="IdEstadoFinal" value="@Model.IdEstadoFinal">
+                        <input type="hidden" id="iOrden" name="Orden" value="@Model.Orden">
+                        <input type="hidden" name="FechaCreacion" value="@Model.FechaCreacion">
+                        <input type="hidden" name="CreadoPor" value="@Model.CreadoPor">
+                        <input type="hidden" name="IdFlujo" value="@Model.IdFlujo">
+
+                        <div class="mb-3">
+                            <label class="form-label">Nombre del Bloque</label>
+                            <input type="text" class="form-control" id="iNombreBloque" name="NombreBloque" value="@Model.NombreBloque">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Unidad</label>
+                            <select asp-for="IdUnidad" class="form-control select2bs4" asp-items="ViewBag.Unidades"></select>
+                        </div>
+
+                    </div>
+                   
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="editBlockChanges()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+

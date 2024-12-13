@@ -1,0 +1,73 @@
+﻿@model ExpediFlow.Models.Expediente
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .container {
+        margin-top: 20px;
+    }
+
+    .list-group-item {
+        cursor: pointer;
+    }
+
+        .list-group-item:hover {
+            background-color: #f0f0f0;
+        }
+</style>
+
+<div class="container-fluid">
+    <div class="card card-primary">
+        <div class="card-header" style="background-color: var(--blue);">
+            <h3 class="card-title">Expediente: @Html.DisplayFor(model => model.NumExpediente)</h3>
+        </div>
+        <div class="card-body">
+            <div class="callout callout-info" style="border-left-color: var(--blue);">
+                <div class="row">
+
+                        <div class="form-group row">
+                                <div class="col-md-2">
+                                    <label class="control-label">@Html.DisplayNameFor(model => model.FechaIngreso)</label>
+                                </div>
+                                <div class="col-md-8">
+                                    <input  type="text" class="form-control" disabled value="@Html.DisplayFor(model => model.FechaIngreso)"/>
+                                </div>
+                       </div> 
+                      
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                 <label class="control-label">@Html.DisplayNameFor(model => model.IdEntidadRepresentanteNavigation)</label>
+                             </div>
+                             <div class="col-md-8">
+                                 <input type="text" class="form-control" value="@Html.DisplayFor(model => model.IdEntidadRepresentanteNavigation.Nombre)" disabled/>
+                             </div>
+                       </div> 
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                 <label class="control-label">@Html.DisplayNameFor(model => model.IdEntidadResponsableNavigation)</label>
+                             </div>
+                             <div class="col-md-8">
+                            <input type="text" class="form-control" value="@Html.DisplayFor(model => model.IdEntidadResponsableNavigation.Nombre)" disabled />
+                             </div>
+                       </div> 
+                        <div class="form-group row">
+                            <div class="col-md-2">
+                                 <label class="control-label">@Html.DisplayNameFor(model => model.IdEntidadSolicitanteNavigation)</label>
+                             </div>
+                             <div class="col-md-8">
+                            <input type="text" class="form-control" value="@Html.DisplayFor(model => model.IdEntidadSolicitanteNavigation.Nombre)" disabled />
+                             </div>
+                       </div> 
+                        
+                </div>
+            </div>
+        </div>
+         <div class="card-footer">
+             <a asp-action="Edit" asp-route-id="@Model.IdExpediente" type="submit" class="btn btn-primary" style="background-color: var(--blue);">Editar</a>
+             <a asp-action="Index" class="btn btn-secondary">Regresar a la Lista</a>
+          </div>
+    </div>
+</div>
+
